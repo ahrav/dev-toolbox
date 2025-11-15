@@ -96,18 +96,136 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 [Concise description of what the project does, its purpose, and key features]
 ```
 
-#### 2. Before Starting Tasks (Workflow Guidelines)
+#### 2. Task Orchestration & Delegation Framework
 ```markdown
-## Before Starting on a Task
-1. First think through the problem and read relevant files
-2. Create a plan using the TodoWrite tool with clear, actionable items
-3. Check in with the user to verify the plan before proceeding
-4. Work through tasks incrementally, marking each as complete
-5. Keep changes simple and focused - minimize code impact
-6. Follow the code style and conventions documented below
+## Task Orchestration & Delegation
+
+You are the main orchestrator for this project. Your role is to break down complex tasks into specialized work units and delegate them to appropriate subagents while maintaining overall coordination.
+
+### Orchestration Workflow
+
+**For Simple Tasks (1-2 files, single concern):**
+- Handle directly without delegation
+- Use appropriate tools (Read, Edit, Write, Bash)
+- Follow project conventions documented below
+
+**For Complex Tasks (3+ files, multiple concerns, cross-cutting):**
+1. **Analyze & Decompose**: Break the task into isolated, focused work units
+2. **Plan with TodoWrite**: Create clear, actionable todo items
+3. **Identify Specialization Needs**: Determine which agents are best suited for each unit
+4. **Delegate in Parallel**: Launch multiple agents concurrently when work units are independent
+5. **Sequential Delegation**: Launch agents sequentially when work depends on previous results
+6. **Integrate Results**: Combine agent outputs into cohesive solution
+7. **Verify & Test**: Ensure all pieces work together correctly
+
+### Delegation Patterns
+
+**Parallel Delegation** (for independent work units):
+```
+Task A: Refactor authentication logic → security-auditor
+Task B: Optimize database queries → performance-engineer
+Task C: Update API documentation → api-documenter
+
+Launch all three agents simultaneously in a single message with multiple Task tool calls.
 ```
 
-#### 3. Development Commands
+**Sequential Delegation** (for dependent work):
+```
+Step 1: Design API schema → backend-architect
+  ↓ (wait for schema design)
+Step 2: Implement endpoints → [language-expert]
+  ↓ (wait for implementation)
+Step 3: Generate documentation → api-documenter
+  ↓ (wait for docs)
+Step 4: Create tests → test-automator
+```
+
+**Hybrid Delegation** (mix of parallel and sequential):
+```
+Phase 1 (Parallel):
+  - Analyze codebase → comprehensive-researcher
+  - Review security → security-auditor
+  - Check performance → performance-engineer
+
+Phase 2 (Sequential, after Phase 1 completes):
+  - Design improvements → architect-review
+  - Implement changes → [language-expert]
+  - Verify quality → code-reviewer
+```
+
+### When to Delegate
+
+**Always delegate to specialized agents when:**
+- Task requires deep domain expertise (security, performance, testing)
+- Working with specific languages/frameworks (Go, Python, TypeScript, Rust)
+- Need architectural design or review
+- Implementing complex features that span multiple files
+- Performing code reviews, security audits, or performance optimization
+- Building APIs, documentation, or test suites
+
+**Handle directly when:**
+- Simple file edits or reads
+- Quick fixes to 1-2 files
+- Running commands or checking status
+- Coordinating between agents
+- Presenting results to the user
+
+### Agent Invocation Syntax
+
+**Single Agent:**
+```
+Use Task tool with:
+- subagent_type: "agent-name"
+- prompt: "Detailed, autonomous task description with all context"
+- description: "Brief 3-5 word summary"
+- model: "haiku" (for quick tasks) or "sonnet" (default)
+```
+
+**Multiple Agents in Parallel:**
+```
+Single message with multiple Task tool invocations:
+- Task 1: subagent_type="golang-expert", prompt="Refactor concurrency patterns..."
+- Task 2: subagent_type="test-automator", prompt="Generate comprehensive tests..."
+- Task 3: subagent_type="api-documenter", prompt="Update OpenAPI specs..."
+```
+
+### Coordination Responsibilities
+
+As the orchestrator, you must:
+1. **Maintain Context**: Keep track of what each agent is working on
+2. **Prevent Conflicts**: Ensure agents don't modify the same files simultaneously
+3. **Integrate Results**: Combine agent outputs into a cohesive solution
+4. **Quality Assurance**: Verify that delegated work meets requirements
+5. **User Communication**: Provide progress updates and present unified results
+6. **Error Handling**: Retry or reassign if an agent encounters issues
+7. **Knowledge Synthesis**: Learn from agent reports and apply insights
+
+### Best Practices
+
+- **Be Specific**: Give agents complete context and clear success criteria
+- **Trust Agents**: Don't micromanage - let specialists work autonomously
+- **Verify Results**: Always review agent outputs before integration
+- **Use TodoWrite**: Track delegation status and integration progress
+- **Parallel When Possible**: Maximize efficiency with concurrent agent execution
+- **Document Decisions**: Update this CLAUDE.md when agents discover new patterns
+```
+
+#### 3. Before Starting Tasks (Workflow Guidelines)
+```markdown
+## Before Starting on a Task
+1. **Assess Complexity**: Determine if task is simple (direct) or complex (delegate)
+2. **Think & Plan**: Use "think", "think hard", or "ultrathink" for complex problems
+3. **Read Context**: Review relevant files to understand current state
+4. **Create Plan**: Use TodoWrite tool with clear, actionable items
+5. **Identify Agents**: Determine which specialized agents can help (see Available Agents below)
+6. **Check with User**: Verify the plan and delegation strategy before proceeding
+7. **Execute**: Work through tasks incrementally, delegating where appropriate
+8. **Mark Progress**: Update todos as complete, integrate agent results
+9. **Verify**: Ensure changes work together and meet requirements
+10. **Keep Simple**: Minimize code impact, follow conventions below
+```
+
+#### 4. Development Commands
 ```markdown
 ## Development Commands
 
@@ -127,7 +245,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 [Build commands, deployment procedures, etc.]
 ```
 
-#### 4. Architecture
+#### 5. Architecture
 ```markdown
 ## Architecture
 
@@ -141,29 +259,87 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 [Required and optional environment variables with descriptions]
 ```
 
-#### 5. Available Agents
+#### 6. Available Agents & Delegation Guide
 ```markdown
 ## Available Claude Code Agents
 
-The following specialized agents are available and relevant for this project:
+The following specialized agents are available and relevant for this project. As the orchestrator, you should delegate work to these agents when their expertise is needed.
 
 ### Language Experts
-- **[agent-name]**: [When to use this agent for this specific project]
+[List relevant language-specific agents based on project tech stack]
+- **[agent-name]**: [Specific use cases for this project]
+  - Example delegation: "Refactor the [component] to use idiomatic [language] patterns"
+  - When to use: [Specific scenarios]
 
 ### Architecture & Design
-- **[agent-name]**: [When to use this agent for this specific project]
+[List relevant architecture agents]
+- **[agent-name]**: [Specific use cases for this project]
+  - Example delegation: "Design the API schema for [feature]"
+  - When to use: [Specific scenarios]
 
 ### Quality & Security
-- **[agent-name]**: [When to use this agent for this specific project]
+[List relevant quality/security agents]
+- **[agent-name]**: [Specific use cases for this project]
+  - Example delegation: "Audit authentication flow for security vulnerabilities"
+  - When to use: [Specific scenarios]
+
+### Performance & Testing
+[List relevant performance/testing agents]
+- **[agent-name]**: [Specific use cases for this project]
+  - Example delegation: "Identify performance bottlenecks in [component]"
+  - When to use: [Specific scenarios]
 
 ### Specialized Tools
-- **[agent-name]**: [When to use this agent for this specific project]
+[List other relevant agents]
+- **[agent-name]**: [Specific use cases for this project]
+  - Example delegation: "Analyze error patterns in production logs"
+  - When to use: [Specific scenarios]
 
-To invoke an agent, use the Task tool with subagent_type set to the agent name.
-Example: Task tool with subagent_type="golang-expert" for Go-specific refactoring.
+### Agent Invocation Examples
+
+**Single Agent Delegation:**
+```
+Use Task tool:
+  subagent_type: "golang-expert"
+  description: "Refactor authentication module"
+  prompt: "Review and refactor the authentication module in pkg/auth/ to use
+          idiomatic Go patterns. Focus on improving error handling, adding
+          context support, and ensuring proper goroutine safety. Provide
+          specific code changes with explanations."
 ```
 
-#### 6. Code Style & Conventions
+**Parallel Multi-Agent Delegation:**
+```
+Launch simultaneously in one message:
+
+Task 1 - subagent_type: "security-auditor"
+  prompt: "Audit the authentication system for security vulnerabilities..."
+
+Task 2 - subagent_type: "test-automator"
+  prompt: "Generate comprehensive test suite for authentication module..."
+
+Task 3 - subagent_type: "api-documenter"
+  prompt: "Update OpenAPI documentation for auth endpoints..."
+```
+
+**Sequential Multi-Agent Workflow:**
+```
+Phase 1: Design
+  → backend-architect: "Design RESTful API for user management feature..."
+
+Phase 2: Implementation (after design complete)
+  → [language-expert]: "Implement the API based on the design from backend-architect..."
+
+Phase 3: Quality (after implementation)
+  → code-reviewer: "Review the implementation for code quality..."
+  → test-automator: "Create comprehensive tests..."
+
+Phase 4: Documentation (after quality checks)
+  → api-documenter: "Generate API documentation..."
+```
+```
+
+#### 7. Code Style & Conventions
 ```markdown
 ## Code Style & Conventions
 
@@ -177,13 +353,13 @@ Example: Task tool with subagent_type="golang-expert" for Go-specific refactorin
 [Comment style, function documentation, module documentation]
 ```
 
-#### 7. Directory Structure
+#### 8. Directory Structure
 ```markdown
 ## Directory Structure
 [Tree view or description of important directories and their purposes]
 ```
 
-#### 8. Additional Sections (as needed)
+#### 9. Additional Sections (as needed)
 - Database Schemas
 - API Endpoints
 - Workflow Types (for workflow engines)
