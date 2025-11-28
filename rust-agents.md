@@ -23,7 +23,6 @@ Use this workflow when working on feature implementation, bug fixes, refactoring
 - Make the smallest possible change.
 - Write or update tests alongside the change when the code is testable; testing is part of implementation, not an afterthought.
 - Run: `cargo build && cargo test && cargo clippy --all-targets --all-features`.
-- Commit with a descriptive message.
 - Mark the task complete in `tasks/todo.md`.
 
 ### Reviewer Loop
@@ -35,7 +34,6 @@ Use this workflow when working on feature implementation, bug fixes, refactoring
 - Update `tasks/todo.md`: mark completed items and add anything discovered.
 - Add a Review entry noting what was done, decisions, issues, and what's next.
 - Ensure code compiles and tests pass.
-- Commit any uncommitted work.
 
 ### Principles
 - Make every change as simple as possible.

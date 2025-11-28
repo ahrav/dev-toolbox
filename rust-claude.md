@@ -26,8 +26,7 @@ For each task:
 3. Make smallest possible change
 4. Write or update tests alongside the change when the code is testable; testing is part of implementation, not an afterthought
 5. Run: `cargo build && cargo test && cargo clippy --all-targets --all-features`
-6. Commit with descriptive message
-7. Mark task complete in todo.md
+6. Mark task complete in todo.md
 
 ### Reviewer Loop
 After completing implementation, trigger reviews using background Task agents to ensure fresh context.
@@ -65,7 +64,6 @@ Collect agent findings and address them before ending the session when possible.
 1. Update `tasks/todo.md` - mark completed, add discovered items
 2. Add Review entry with: what was done, decisions, issues, what's next
 3. Ensure code compiles and tests pass
-4. Commit any uncommitted work
 
 ### Principles
 - Make every change as simple as possible
