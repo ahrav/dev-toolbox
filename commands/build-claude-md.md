@@ -1,66 +1,88 @@
-You are tasked with creating an ideal CLAUDE.md file for this project with comprehensive orchestration and delegation instructions.
+You are tasked with creating a CONCISE, focused CLAUDE.md file for this project following Anthropic's best practices.
 
 ## Your Mission
 
-Launch the `claude-md-architect` agent to perform a deep, comprehensive analysis of this project and generate an optimal CLAUDE.md file that establishes Claude as the main orchestrator with clear delegation patterns.
+Launch the `claude-md-architect` agent to analyze this project and generate a concise CLAUDE.md file focused on PROJECT-SPECIFIC information.
 
 The agent will:
-1. **Deeply analyze** the project structure, tech stack, and architecture
-2. **Review all available agents** in ~/.claude/agents/ and match them to this project
-3. **Generate a comprehensive CLAUDE.md** with orchestration framework and project-specific guidance
-4. **Provide delegation patterns** showing when and how to use specialized agents
-5. **Include concrete examples** of single-agent, parallel, and sequential workflows
+1. **Analyze** the project structure, tech stack, and architecture
+2. **Identify relevant agents** from ~/.claude/agents/ for this specific project
+3. **Generate a CONCISE CLAUDE.md** (target: 80-150 lines) focused on what's unique to this project
+4. **Create separate documentation files** for detailed content in .claude/docs/
+
+## Key Principles (From Anthropic Best Practices)
+
+**MUST FOLLOW**:
+- "Keep the file concise and human-readable"
+- "Don't add extensive content without testing effectiveness"
+- "Avoid overly complex or verbose instructions"
+- Focus on PROJECT-SPECIFIC information only
+
+**What Belongs in CLAUDE.md**:
+- Common bash commands
+- Core files and utilities
+- Code style guidelines specific to THIS project
+- Testing instructions
+- Project-specific gotchas
+- Brief list of relevant agents with examples
+
+**What Goes in .claude/docs/** (for large projects):
+- Detailed architecture
+- API patterns
+- Testing strategy
+- Deployment procedures
+- Orchestration patterns
 
 ## Instructions
 
 Use the Task tool to invoke the claude-md-architect agent with the following prompt:
 
 ```
-Perform a comprehensive analysis of this project and generate an ideal CLAUDE.md file with full orchestration and delegation framework.
+Analyze this project and generate a CONCISE CLAUDE.md file following Anthropic's best practices.
 
-Take your time to:
-1. Explore the entire codebase systematically using parallel searches
-2. Identify the tech stack, frameworks, testing tools, and architecture patterns
-3. Review all available agents in ~/.claude/agents/ and determine which are relevant for this project
-4. Generate a complete, production-ready CLAUDE.md file that includes:
+CRITICAL: Keep CLAUDE.md concise (80-150 lines). Follow the template at ~/.claude/examples/CLAUDE.template.md
 
-   **Core Sections:**
-   - Project overview and purpose
-   - **Task Orchestration & Delegation framework** (instructions for Claude as orchestrator)
-   - Before Starting Tasks workflow (with delegation assessment)
-   - Development commands (setup, run, test, lint, build)
-   - Architecture description and key patterns
+Your tasks:
+1. Analyze the project:
+   - Tech stack and frameworks
+   - Key files and directories
+   - Testing setup
+   - Project-specific patterns
 
-   **Agent Integration:**
-   - **Available Agents section** with project-specific recommendations
-   - When to delegate vs. handle directly
-   - Agent invocation syntax and examples
-   - Single-agent, parallel, and sequential delegation patterns
-   - Concrete workflow examples for this specific project
+2. Identify relevant agents:
+   - Only list agents that are RELEVANT to this specific project
+   - Provide 1-2 concrete examples per agent
+   - Keep it brief
 
-   **Additional Guidance:**
-   - Code style and conventions
-   - Directory structure
-   - Project-specific best practices
-   - Coordination responsibilities for the orchestrator
+3. Generate CONCISE CLAUDE.md with:
+   - Project overview (2-3 sentences)
+   - Quick start commands
+   - Architecture overview (not details)
+   - Code style specific to THIS project
+   - Brief list of relevant agents
+   - Project-specific gotchas/notes
+   - Links to .claude/docs/ for details
 
-The CLAUDE.md should establish Claude as the intelligent orchestrator who:
-- Breaks down complex tasks into isolated work units
-- Delegates to specialized agents when their expertise is needed
-- Handles simple tasks directly without unnecessary delegation
-- Coordinates parallel and sequential agent workflows
-- Integrates agent results into cohesive solutions
+4. For larger projects, create .claude/docs/ with:
+   - architecture.md - Detailed system design
+   - orchestration.md - Agent delegation patterns
+   - api-patterns.md - API conventions
+   - testing-guide.md - Testing strategy
 
-Reference the orchestration template at ~/.claude/examples/CLAUDE.orchestration.template.md for structure and patterns.
+5. Assessment:
+   - If project is small/medium: Single concise CLAUDE.md
+   - If project is large: Concise CLAUDE.md + .claude/docs/
 
-Use "ultrathink" mode - be thorough and take all the time needed to create an exceptional CLAUDE.md that will significantly improve Claude Code's effectiveness on this project.
+Reference templates:
+- CLAUDE.md: ~/.claude/examples/CLAUDE.template.md
+- Docs: ~/.claude/examples/docs/
 
 Present your findings with:
-1. A summary of the project characteristics discovered
-2. A list of recommended agents and rationale for each
-3. Suggested delegation workflows for common tasks in this project
-4. The complete CLAUDE.md content ready to save
-5. Recommendations for placement (root, parent directory, etc.)
+1. Project size assessment (small/medium/large)
+2. Recommended agents and brief rationale
+3. The CONCISE CLAUDE.md content (80-150 lines)
+4. If applicable: Contents of .claude/docs/ files
+5. Placement recommendation
 ```
 
-Invoke the agent now and let it work autonomously to produce the best possible orchestration-enabled CLAUDE.md for this project.
+Invoke the agent now to produce a concise, effective CLAUDE.md following best practices.
