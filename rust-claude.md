@@ -4,6 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Session Workflow (Implementation Tasks Only)
 
+**IMPORTANT**: A task is NOT complete until ALL three phases are finished:
+1. ✅ Implementation Loop - code written and tests passing
+2. ✅ Reviewer Loop - agents triggered and findings addressed
+3. ✅ Ending a Session - todo.md updated and session documented
+
+**If you stop after implementation without completing reviews and session close-out, the workflow is incomplete.**
+
 Use this workflow when working on feature implementation, bug fixes, refactoring, or other code changes. Skip this workflow for questions, information requests, or exploratory discussions.
 
 ### Starting a Session
@@ -27,6 +34,9 @@ For each task:
 4. Write or update tests alongside the change when the code is testable; testing is part of implementation, not an afterthought
 5. Run: `cargo build && cargo test && cargo clippy --all-targets --all-features`
 6. Mark task complete in todo.md
+
+---
+✅ **Implementation Complete → Now proceed to Reviewer Loop below**
 
 ### Reviewer Loop
 After completing implementation, trigger reviews using background Task agents to ensure fresh context.
@@ -60,10 +70,23 @@ For each selected agent, provide:
 **Step 4: Address Findings**
 Collect agent findings and address them before ending the session when possible.
 
+---
+✅ **Reviews Complete → Now proceed to Ending a Session below**
+
 ### Ending a Session
 1. Update `tasks/todo.md` - mark completed, add discovered items
 2. Add Review entry with: what was done, decisions, issues, what's next
 3. Ensure code compiles and tests pass
+
+### Session Completion Checklist
+Before finishing, verify you completed ALL steps:
+- [ ] **Implementation**: Code written, tests passing, clippy clean
+- [ ] **Reviews**: Appropriate agents triggered, findings addressed
+- [ ] **Documentation**: `tasks/todo.md` updated with completed/new items
+- [ ] **Session Notes**: Review entry added with decisions and next steps
+- [ ] **Verification**: Final `cargo build && cargo test && cargo clippy` passes
+
+**If any checkbox is incomplete, the session is not finished. Complete all steps before stopping.**
 
 ### Principles
 - Make every change as simple as possible
