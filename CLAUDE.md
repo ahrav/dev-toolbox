@@ -174,10 +174,10 @@ Assess the implementation:
 | Change Characteristics | Recommended Agents |
 |------------------------|-------------------|
 | Small, isolated, simple | `code-reviewer` only |
-| Language-specific patterns | Add language expert (`rust-expert`, `python-expert`, `golang-expert`, etc.) |
+| Language-specific patterns | Add language expert (`rust-expert`, `python-expert`, `golang-expert`, `typescript-pro` etc.) |
 | Auth, input validation, crypto | Add `security-auditor` |
-| Hot paths, data structures, I/O | Add `performance-engineer` |
-| New modules, API changes, cross-cutting | Add `architect-review` |
+| Hot paths, data structures, I/O | Add `performance-engineer`, `rust-performance-analyzer`, `dod-reviewer` |
+| New modules, API changes, cross-cutting | Add `architect-review`, `multi-perspective-architect`, `dod-reviewer` |
 | Large or complex changes | Multiple agents in parallel |
 
 ### Step 3: Launch Reviews
