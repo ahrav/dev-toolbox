@@ -77,6 +77,60 @@ Conditions met:
 
 ---
 
+## Task Decomposition (Pre-Scoping)
+
+For ambiguous or complex feature requests that need to be broken down before entering the main workflow, use the `/decompose` command or invoke the `task-architect` agent.
+
+### When to Use
+
+**Use /decompose when:**
+- Feature request has unclear scope
+- Multiple implementation approaches seem viable
+- External APIs or specifications are involved
+- Changes will span multiple modules
+- You're unsure where to start
+
+**Skip /decompose when:**
+- Task is already well-defined in todo.md
+- Single-file changes with obvious implementation
+- Bug fix with clear location and cause
+- Direct "add X to file Y" requests
+
+### How It Works
+
+```
+/decompose <your feature request>
+```
+
+The `task-architect` agent will:
+1. **Assess complexity** (score 0-10) based on scope, unknowns, approach certainty, external deps, cross-cutting concerns
+2. **Gather baseline knowledge** if complexity > 2 (lightweight codebase exploration)
+3. **Research external dependencies** if complexity > 5 (via comprehensive-researcher)
+4. **Explore approaches** if complexity >= 8 with multiple viable paths (via multi-perspective-architect)
+5. **Define atomic tasks** grouped by theme with files, criteria, and dependencies
+6. **Interactive refinement** - present grouped tasks, iterate on your feedback
+7. **Write to todo.md** when you accept the proposed tasks
+
+### Integration with Workflow
+
+```
+Feature Request
+      │
+      ▼
+┌─────────────────┐
+│ /decompose      │ ◄── For ambiguous requests
+└────────┬────────┘
+         │ tasks written to todo.md
+         ▼
+┌─────────────────┐
+│ Start Session   │ ◄── Normal workflow begins
+└────────┬────────┘
+         ▼
+    [Scoping Loop → Implementation → Review → Close]
+```
+
+---
+
 ## Scoping Loop
 
 **Purpose**: Validate task is ready before writing code. Effort scales with ambiguity.
